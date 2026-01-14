@@ -1,0 +1,4 @@
+https://sharpcutsai.vercel.app/ (https://github.com/david-estrera/SharpCuts.git)
+https://perfumerecommenderai.netlify.app/ (https://github.com/david-estrera/perfume-recommender)
+https://generic-store-dj.vercel.app/ (https://github.com/david-estrera/generic-store.git)
+https://usaptau.netlify.app/ (https://github.com/david-estrera/usap-tau.git)
