@@ -62,7 +62,7 @@ export default function Navbar() {
           {/* Logo */}
           <motion.div
             whileHover={{ scale: 1.05 }}
-            className="text-xl md:text-2xl font-bold text-primary-500"
+            className="text-xl md:text-2xl font-bold text-primary-600"
           >
             <a href="#home" onClick={(e) => {
               e.preventDefault();
@@ -82,10 +82,10 @@ export default function Navbar() {
                   e.preventDefault();
                   handleNavClick(item.href);
                 }}
-                className={`text-sm font-medium transition-colors duration-200 ${
+                className={`text-sm font-medium transition-colors duration-300 ${
                   activeSection === item.href.substring(1)
-                    ? "text-primary-500"
-                    : "text-gray-300 hover:text-primary-400"
+                    ? "text-primary-600"
+                    : "text-gray-300 hover:text-primary-500"
                 }`}
               >
                 {item.name}
@@ -95,7 +95,7 @@ export default function Navbar() {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-gray-300 hover:text-primary-500 transition-colors"
+            className="md:hidden text-gray-300 hover:text-primary-600 transition-colors duration-300"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -126,10 +126,10 @@ export default function Navbar() {
                     e.preventDefault();
                     handleNavClick(item.href);
                   }}
-                  className={`block text-base font-medium transition-colors duration-200 ${
+                  className={`block text-base font-medium transition-colors duration-300 ${
                     activeSection === item.href.substring(1)
-                      ? "text-primary-500"
-                      : "text-gray-300 hover:text-primary-400"
+                      ? "text-primary-600"
+                      : "text-gray-300 hover:text-primary-500"
                   }`}
                 >
                   {item.name}

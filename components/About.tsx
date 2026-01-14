@@ -37,7 +37,7 @@ export default function About() {
             variants={slideInLeft}
             className="relative w-full max-w-md mx-auto"
           >
-            <div className="relative aspect-square rounded-lg overflow-hidden border-2 border-primary-500/50 shadow-lg shadow-primary-500/20">
+            <div className="relative aspect-square rounded-lg overflow-hidden border-2 border-primary-600/50 shadow-lg shadow-primary-600/20">
               <Image
                 src="/personal pic.png"
                 alt="David Joshua Estrera"
@@ -48,15 +48,15 @@ export default function About() {
               />
             </div>
             <motion.div
-              className="absolute -bottom-4 -right-4 w-full h-full border-2 border-primary-500/30 rounded-lg -z-10"
+              className="absolute -bottom-4 -right-4 w-full h-full border-2 border-primary-600/30 rounded-lg -z-10"
               animate={{
-                x: [0, 10, 0],
-                y: [0, 10, 0],
+                x: [0, 8, 0],
+                y: [0, 8, 0],
               }}
               transition={{
-                duration: 4,
+                duration: 6,
                 repeat: Infinity,
-                ease: "easeInOut",
+                ease: [0.4, 0, 0.6, 1],
               }}
             />
           </motion.div>
@@ -87,7 +87,7 @@ export default function About() {
                 href="#contact"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="inline-block px-6 py-3 bg-primary-500 text-white font-semibold rounded-lg hover:bg-primary-600 transition-all duration-200 shadow-lg shadow-primary-500/50"
+                className="inline-block px-6 py-3 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-all duration-300 shadow-lg shadow-primary-600/50"
               >
                 Get In Touch
               </motion.a>

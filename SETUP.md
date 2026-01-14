@@ -4,7 +4,7 @@
 
 ### Core Setup
 - ✅ Next.js 14 project initialized with TypeScript
-- ✅ Tailwind CSS configured with green primary color (#10b981)
+- ✅ Tailwind CSS configured with dark green primary color (#15803d)
 - ✅ Framer Motion for animations
 - ✅ All dependencies installed
 
@@ -78,8 +78,8 @@ Test on:
 
 ## ✨ Key Features
 
-1. **Apple-Style Scroll Animations** - Smooth parallax and reveal effects
+1. **Lusion-Inspired Scroll Animations** - Smooth parallax effects, floating geometric objects, and particle systems
 2. **Fully Responsive** - Optimized for all screen sizes
-3. **Green Primary Color** - Consistent green accent throughout
-4. **Dark Mode** - Beautiful dark theme
+3. **Dark Green Primary Color** - Consistent dark green accent throughout
+4. **Dark Mode** - Beautiful dark theme with subtle glows
 5. **Performance Optimized** - Fast loading and smooth animations

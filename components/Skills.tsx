@@ -131,7 +131,7 @@ export default function Skills() {
                 key={category.title}
                 variants={fadeInUp}
                 whileHover={{ y: -5, scale: 1.02 }}
-                className="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg p-6 hover:border-primary-500/50 transition-all duration-300"
+                className="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg p-6 hover:border-primary-600/50 transition-all duration-300"
               >
                 <div className="flex items-center gap-4 mb-4">
                   <div className={`p-3 bg-gray-800 rounded-lg ${category.color}`}>
@@ -145,7 +145,7 @@ export default function Skills() {
                       key={skill}
                       className="text-gray-400 text-sm flex items-center gap-2"
                     >
-                      <span className="text-primary-500">▹</span>
+                      <span className="text-primary-600">▹</span>
                       {skill}
                     </li>
                   ))}

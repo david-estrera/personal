@@ -29,7 +29,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-gray-400 text-sm text-center md:text-left">
-            © {currentYear} David Joshua Estrera. All rights reserved.
+            © {currentYear} David. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
             {socialLinks.map((social) => {
@@ -42,7 +42,7 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.9 }}
-                  className="text-gray-400 hover:text-primary-500 transition-colors"
+                  className="text-gray-400 hover:text-primary-600 transition-colors duration-300"
                   aria-label={social.label}
                 >
                   <Icon size={20} />

@@ -1,10 +1,10 @@
 # Portfolio Website
 
-A modern, responsive portfolio website built with Next.js 14, featuring Apple-style scroll animations, dark mode design, and a green primary color scheme.
+A modern, responsive portfolio website built with Next.js 14, featuring Lusion-inspired scroll animations, dynamic particle systems, dark mode design, and a dark green primary color scheme.
 
 ## Features
 
-- 🎨 **Apple-Style Scroll Animations** - Smooth parallax effects and reveal animations
+- 🎨 **Lusion-Inspired Scroll Animations** - Smooth parallax effects, floating objects, and reveal animations
 - 📱 **Fully Responsive** - Mobile-first design optimized for all devices
 - 🎯 **Green Primary Color** - Consistent green accent throughout
 - ⚡ **Performance Optimized** - Fast loading and smooth animations

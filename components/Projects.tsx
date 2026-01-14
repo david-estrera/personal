@@ -44,11 +44,11 @@ export default function Projects() {
               key={project.title}
               variants={scaleIn}
               whileHover={{ y: -8, scale: 1.02 }}
-              className="group relative bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden hover:border-primary-500/50 transition-all duration-300"
+              className="group relative bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg overflow-hidden hover:border-primary-600/50 transition-all duration-300"
             >
               <div className="p-6 h-full flex flex-col">
                 <div className="flex-1">
-                  <h3 className="text-xl font-bold mb-2 text-white group-hover:text-primary-400 transition-colors">
+                  <h3 className="text-xl font-bold mb-2 text-white group-hover:text-primary-500 transition-colors duration-300"
                     {project.title}
                   </h3>
                   <p className="text-gray-400 mb-4 text-sm leading-relaxed">
@@ -58,7 +58,7 @@ export default function Projects() {
                     {project.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="px-3 py-1 text-xs bg-primary-500/20 text-primary-400 rounded-full border border-primary-500/30"
+                        className="px-3 py-1 text-xs bg-primary-600/20 text-primary-400 rounded-full border border-primary-600/30"
                       >
                         {tag}
                       </span>
@@ -72,7 +72,7 @@ export default function Projects() {
                     rel="noopener noreferrer"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
-                    className="flex items-center gap-2 text-primary-500 hover:text-primary-400 transition-colors text-sm font-medium"
+                    className="flex items-center gap-2 text-primary-600 hover:text-primary-500 transition-colors duration-300 text-sm font-medium"
                   >
                     <ExternalLink size={18} />
                     Live Demo
@@ -83,7 +83,7 @@ export default function Projects() {
                     rel="noopener noreferrer"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
-                    className="flex items-center gap-2 text-gray-400 hover:text-primary-400 transition-colors text-sm font-medium"
+                    className="flex items-center gap-2 text-gray-400 hover:text-primary-500 transition-colors duration-300 text-sm font-medium"
                   >
                     <Github size={18} />
                     Code
@@ -91,7 +91,7 @@ export default function Projects() {
                 </div>
               </div>
               {/* Hover glow effect */}
-              <div className="absolute inset-0 bg-primary-500/0 group-hover:bg-primary-500/5 transition-all duration-300 pointer-events-none rounded-lg"></div>
+              <div className="absolute inset-0 bg-primary-600/0 group-hover:bg-primary-600/5 transition-all duration-300 pointer-events-none rounded-lg"></div>
             </motion.div>
           ))}
         </motion.div>

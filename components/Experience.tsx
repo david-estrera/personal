@@ -112,17 +112,17 @@ export default function Experience() {
                 className="relative"
               >
                 {/* Timeline dot */}
-                <div className="absolute left-4 md:left-1/2 w-4 h-4 bg-primary-500 rounded-full -translate-x-1/2 -translate-y-1 z-10 border-4 border-black"></div>
+                <div className="absolute left-4 md:left-1/2 w-4 h-4 bg-primary-600 rounded-full -translate-x-1/2 -translate-y-1 z-10 border-4 border-black"></div>
 
                 <div
                   className={`ml-12 md:ml-0 ${
                     index % 2 === 0 ? "md:mr-auto md:pr-8 md:w-1/2" : "md:ml-auto md:pl-8 md:w-1/2"
                   }`}
                 >
-                  <div className="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg p-6 hover:border-primary-500/50 transition-all duration-300">
+                  <div className="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg p-6 hover:border-primary-600/50 transition-all duration-300">
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4">
                       <div className="flex items-center gap-2">
-                        <Briefcase className="text-primary-500" size={20} />
+                        <Briefcase className="text-primary-600" size={20} />
                         <h3 className="text-xl font-bold text-white">{exp.title}</h3>
                       </div>
                       <div className="flex items-center gap-2 text-gray-400 text-sm">
@@ -130,14 +130,14 @@ export default function Experience() {
                         <span>{exp.period}</span>
                       </div>
                     </div>
-                    <p className="text-primary-400 font-semibold mb-4">{exp.company}</p>
+                    <p className="text-primary-500 font-semibold mb-4">{exp.company}</p>
                     <ul className="space-y-2">
                       {exp.description.map((item, idx) => (
                         <li
                           key={idx}
                           className="text-gray-400 text-sm flex items-start gap-2"
                         >
-                          <span className="text-primary-500 mt-1">▹</span>
+                          <span className="text-primary-600 mt-1">▹</span>
                           <span>{item}</span>
                         </li>
                       ))}

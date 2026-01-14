@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import { ChevronDown, Download } from "lucide-react";
 import { fadeInUp, fadeIn } from "@/lib/animations";
+import ParticleSystem from "./ParticleSystem";
+import FloatingObjects from "./FloatingObjects";
 
 export default function Hero() {
   const handleScrollDown = () => {
@@ -24,32 +26,35 @@ export default function Hero() {
       id="home"
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-black via-gray-900 to-black"
     >
+      <ParticleSystem />
+      <FloatingObjects />
+      
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
-          className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl"
+          className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-600/15 rounded-full blur-3xl"
           animate={{
-            scale: [1, 1.2, 1],
-            x: [0, 50, 0],
-            y: [0, 30, 0],
+            scale: [1, 1.15, 1],
+            x: [0, 30, 0],
+            y: [0, 20, 0],
           }}
           transition={{
-            duration: 20,
+            duration: 12,
             repeat: Infinity,
-            ease: "easeInOut",
+            ease: [0.4, 0, 0.6, 1],
           }}
         />
         <motion.div
-          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary-400/10 rounded-full blur-3xl"
+          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary-700/15 rounded-full blur-3xl"
           animate={{
-            scale: [1, 1.3, 1],
-            x: [0, -50, 0],
-            y: [0, -30, 0],
+            scale: [1, 1.15, 1],
+            x: [0, -25, 0],
+            y: [0, -15, 0],
           }}
           transition={{
-            duration: 25,
+            duration: 14,
             repeat: Infinity,
-            ease: "easeInOut",
+            ease: [0.4, 0, 0.6, 1],
           }}
         />
       </div>
@@ -64,10 +69,10 @@ export default function Hero() {
         >
           <motion.h1
             variants={fadeInUp}
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-tight"
+            className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold leading-tight tracking-tight"
+            style={{ fontFamily: 'var(--font-inter)' }}
           >
-            <span className="block">David Joshua</span>
-            <span className="block text-primary-500">Estrera</span>
+            <span className="block text-white">David</span>
           </motion.h1>
 
           <motion.p
@@ -93,7 +98,7 @@ export default function Hero() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleScrollDown}
-              className="px-8 py-4 bg-primary-500 text-white font-semibold rounded-lg shadow-lg shadow-primary-500/50 hover:bg-primary-600 transition-all duration-200 flex items-center gap-2 min-w-[200px] justify-center"
+              className="px-8 py-4 bg-primary-600 text-white font-semibold rounded-lg shadow-lg shadow-primary-600/50 hover:bg-primary-700 transition-all duration-300 flex items-center gap-2 min-w-[200px] justify-center"
             >
               View My Work
             </motion.button>
@@ -101,7 +106,7 @@ export default function Hero() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleDownloadResume}
-              className="px-8 py-4 bg-transparent border-2 border-primary-500 text-primary-500 font-semibold rounded-lg hover:bg-primary-500/10 transition-all duration-200 flex items-center gap-2 min-w-[200px] justify-center"
+              className="px-8 py-4 bg-transparent border-2 border-primary-600 text-primary-500 font-semibold rounded-lg hover:bg-primary-600/10 transition-all duration-300 flex items-center gap-2 min-w-[200px] justify-center"
             >
               <Download size={20} />
               Download Resume
@@ -121,7 +126,7 @@ export default function Hero() {
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
           onClick={handleScrollDown}
-          className="text-primary-500 hover:text-primary-400 transition-colors"
+          className="text-primary-600 hover:text-primary-500 transition-colors"
           aria-label="Scroll down"
         >
           <ChevronDown size={32} />

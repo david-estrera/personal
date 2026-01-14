@@ -67,7 +67,7 @@ export default function Contact() {
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4">
             Get In <span className="text-primary-500">Touch</span>
           </h2>
-          <div className="w-24 h-1 bg-primary-500 mx-auto"></div>
+          <div className="w-24 h-1 bg-primary-600 mx-auto"></div>
           <p className="text-gray-400 mt-6 text-lg max-w-2xl mx-auto">
             Let's connect and discuss how we can work together
           </p>
@@ -88,9 +88,9 @@ export default function Contact() {
                 <motion.div
                   key={info.label}
                   whileHover={{ x: 5 }}
-                  className="flex items-start gap-4 p-4 bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg hover:border-primary-500/50 transition-all duration-300"
+                  className="flex items-start gap-4 p-4 bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg hover:border-primary-600/50 transition-all duration-300"
                 >
-                  <div className="p-3 bg-primary-500/20 rounded-lg text-primary-500">
+                  <div className="p-3 bg-primary-600/20 rounded-lg text-primary-600">
                     <Icon size={24} />
                   </div>
                   <div>
@@ -98,7 +98,7 @@ export default function Contact() {
                     {info.href ? (
                       <a
                         href={info.href}
-                        className="text-white hover:text-primary-400 transition-colors"
+                        className="text-white hover:text-primary-500 transition-colors duration-300"
                       >
                         {info.value}
                       </a>
@@ -124,7 +124,7 @@ export default function Contact() {
                       rel="noopener noreferrer"
                       whileHover={{ scale: 1.1, y: -5 }}
                       whileTap={{ scale: 0.9 }}
-                      className="p-4 bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg hover:border-primary-500/50 text-gray-400 hover:text-primary-500 transition-all duration-300"
+                      className="p-4 bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg hover:border-primary-600/50 text-gray-400 hover:text-primary-600 transition-all duration-300"
                     >
                       <Icon size={24} />
                     </motion.a>
@@ -138,7 +138,7 @@ export default function Contact() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleDownloadResume}
-              className="w-full md:w-auto px-8 py-4 bg-primary-500 text-white font-semibold rounded-lg hover:bg-primary-600 transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-primary-500/50"
+              className="w-full md:w-auto px-8 py-4 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-primary-600/50"
             >
               <Download size={20} />
               Download Resume
@@ -157,7 +157,7 @@ export default function Contact() {
                   type="text"
                   id="name"
                   name="name"
-                  className="w-full px-4 py-3 bg-gray-900/50 border border-gray-800 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-primary-500 transition-colors"
+                  className="w-full px-4 py-3 bg-gray-900/50 border border-gray-800 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-primary-600 transition-colors duration-300"
                   placeholder="Your name"
                 />
               </div>
@@ -169,7 +169,7 @@ export default function Contact() {
                   type="email"
                   id="email"
                   name="email"
-                  className="w-full px-4 py-3 bg-gray-900/50 border border-gray-800 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-primary-500 transition-colors"
+                  className="w-full px-4 py-3 bg-gray-900/50 border border-gray-800 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-primary-600 transition-colors duration-300"
                   placeholder="your.email@example.com"
                 />
               </div>
@@ -189,7 +189,7 @@ export default function Contact() {
                 type="submit"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-full px-8 py-4 bg-primary-500 text-white font-semibold rounded-lg hover:bg-primary-600 transition-all duration-200 shadow-lg shadow-primary-500/50"
+                className="w-full px-8 py-4 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-all duration-300 shadow-lg shadow-primary-600/50"
               >
                 Send Message
               </motion.button>
