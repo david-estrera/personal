@@ -5,6 +5,7 @@ import { ChevronDown, Download } from "lucide-react";
 import { fadeInUp, fadeIn } from "@/lib/animations";
 import ParticleSystem from "./ParticleSystem";
 import FloatingObjects from "./FloatingObjects";
+import TypewriterText from "./TypewriterText";
 
 export default function Hero() {
   const handleScrollDown = () => {
@@ -69,10 +70,12 @@ export default function Hero() {
         >
           <motion.h1
             variants={fadeInUp}
-            className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold leading-tight tracking-tight"
+            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-tight tracking-tight"
             style={{ fontFamily: 'var(--font-inter)' }}
           >
-            <span className="block text-white">David</span>
+            <span className="block text-white">
+              <TypewriterText text="Hi I'm David" speed={80} />
+            </span>
           </motion.h1>
 
           <motion.p

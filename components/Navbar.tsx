@@ -68,7 +68,6 @@ export default function Navbar() {
               e.preventDefault();
               handleNavClick("#home");
             }}>
-              D.J.E
             </a>
           </motion.div>
 

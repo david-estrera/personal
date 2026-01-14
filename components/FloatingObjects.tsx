@@ -21,12 +21,29 @@ const objects: FloatingObject[] = [
   { id: 6, shape: "square", size: 55, x: 90, y: 80, speed: 0.4 },
 ];
 
-export default function FloatingObjects() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"],
-  });
+interface FloatingShapeProps {
+  obj: FloatingObject;
+  index: number;
+  scrollYProgress: any;
+}
+
+function FloatingShape({ obj, index, scrollYProgress }: FloatingShapeProps) {
+  const baseY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [obj.y, obj.y - obj.speed * 50]
+  );
+  const baseX = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [obj.x, obj.x + obj.speed * 20]
+  );
+  const opacity = useTransform(
+    scrollYProgress,
+    [0, 0.3, 0.7, 1],
+    [0.3, 0.6, 0.6, 0.3]
+  );
+  const rotate = useTransform(scrollYProgress, [0, 1], [0, 360]);
 
   const renderShape = (shape: string, size: number) => {
     const baseClasses = "border-2 border-primary-600/30";
@@ -66,55 +83,52 @@ export default function FloatingObjects() {
   };
 
   return (
+    <motion.div
+      className="absolute"
+      style={{
+        left: `${obj.x}%`,
+        top: `${obj.y}%`,
+        y: baseY,
+        x: baseX,
+        opacity,
+        rotate,
+      }}
+      animate={{
+        y: [0, -15, 0],
+        x: [0, 8, 0],
+      }}
+      transition={{
+        duration: 5 + index * 0.5,
+        repeat: Infinity,
+        ease: [0.25, 0.1, 0.25, 1],
+      }}
+    >
+      {renderShape(obj.shape, obj.size)}
+    </motion.div>
+  );
+}
+
+export default function FloatingObjects() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"],
+  });
+
+  return (
     <div
       ref={containerRef}
       className="fixed inset-0 pointer-events-none overflow-hidden z-0"
       aria-hidden="true"
     >
-      {objects.map((obj, index) => {
-        const y = useTransform(
-          scrollYProgress,
-          [0, 1],
-          [obj.y, obj.y - obj.speed * 50]
-        );
-        const x = useTransform(
-          scrollYProgress,
-          [0, 1],
-          [obj.x, obj.x + obj.speed * 20]
-        );
-        const opacity = useTransform(
-          scrollYProgress,
-          [0, 0.3, 0.7, 1],
-          [0.3, 0.6, 0.6, 0.3]
-        );
-        const rotate = useTransform(scrollYProgress, [0, 1], [0, 360]);
-
-        return (
-          <motion.div
-            key={obj.id}
-            className="absolute"
-            style={{
-              left: `${obj.x}%`,
-              top: `${obj.y}%`,
-              y,
-              x,
-              opacity,
-              rotate,
-            }}
-            animate={{
-              y: [0, -15, 0],
-              x: [0, 8, 0],
-            }}
-            transition={{
-              duration: 5 + index * 0.5,
-              repeat: Infinity,
-              ease: [0.25, 0.1, 0.25, 1],
-            }}
-          >
-            {renderShape(obj.shape, obj.size)}
-          </motion.div>
-        );
-      })}
+      {objects.map((obj, index) => (
+        <FloatingShape
+          key={obj.id}
+          obj={obj}
+          index={index}
+          scrollYProgress={scrollYProgress}
+        />
+      ))}
     </div>
   );
 }

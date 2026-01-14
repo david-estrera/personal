@@ -7,12 +7,14 @@ import Experience from "@/components/Experience";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import ScrollIndicator from "@/components/ScrollIndicator";
+import SnakeLine from "@/components/SnakeLine";
 
 export default function Home() {
   return (
     <main className="relative">
       <ScrollIndicator />
       <Navbar />
+      <SnakeLine />
       <Hero />
       <About />
       <Projects />

@@ -2,13 +2,19 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef } from "react";
-import { Mail, Phone, MapPin, Github, Linkedin, Download } from "lucide-react";
+import { useRef, useState } from "react";
+import { Mail, Github, Linkedin, Download } from "lucide-react";
 import { fadeInUp, staggerContainer } from "@/lib/animations";
 
 export default function Contact() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: false, margin: "-100px" });
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success">("idle");
 
   const handleDownloadResume = () => {
     const link = document.createElement("a");
@@ -17,24 +23,44 @@ export default function Contact() {
     link.click();
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    
+    // Create mailto link with form data
+    const subject = encodeURIComponent(`Contact from ${formData.name}`);
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+    );
+    const mailtoLink = `mailto:davidestrera.work@gmail.com?subject=${subject}&body=${body}`;
+    
+    // Open email client
+    window.location.href = mailtoLink;
+    
+    // Reset form
+    setFormData({ name: "", email: "", message: "" });
+    setSubmitStatus("success");
+    
+    // Reset status after 3 seconds
+    setTimeout(() => {
+      setSubmitStatus("idle");
+    }, 3000);
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   const contactInfo = [
     {
       icon: Mail,
       label: "Email",
       value: "davidestrera.work@gmail.com",
       href: "mailto:davidestrera.work@gmail.com",
-    },
-    {
-      icon: Phone,
-      label: "Phone",
-      value: "0927-930-9625",
-      href: "tel:+639279309625",
-    },
-    {
-      icon: MapPin,
-      label: "Location",
-      value: "Quezon City, Metro Manila 1126",
-      href: null,
     },
   ];
 
@@ -148,7 +174,7 @@ export default function Contact() {
           {/* Contact Form */}
           <motion.div variants={fadeInUp} className="space-y-6">
             <h3 className="text-2xl font-bold text-white mb-6">Send a Message</h3>
-            <form className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label htmlFor="name" className="block text-gray-400 text-sm mb-2">
                   Name
@@ -157,6 +183,9 @@ export default function Contact() {
                   type="text"
                   id="name"
                   name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
                   className="w-full px-4 py-3 bg-gray-900/50 border border-gray-800 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-primary-600 transition-colors duration-300"
                   placeholder="Your name"
                 />
@@ -169,6 +198,9 @@ export default function Contact() {
                   type="email"
                   id="email"
                   name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
                   className="w-full px-4 py-3 bg-gray-900/50 border border-gray-800 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-primary-600 transition-colors duration-300"
                   placeholder="your.email@example.com"
                 />
@@ -180,11 +212,19 @@ export default function Contact() {
                 <textarea
                   id="message"
                   name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
                   rows={6}
                   className="w-full px-4 py-3 bg-gray-900/50 border border-gray-800 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-primary-500 transition-colors resize-none"
                   placeholder="Your message..."
                 ></textarea>
               </div>
+              {submitStatus === "success" && (
+                <div className="p-3 bg-primary-600/20 border border-primary-600/50 rounded-lg text-primary-400 text-sm">
+                  Your email client should open shortly!
+                </div>
+              )}
               <motion.button
                 type="submit"
                 whileHover={{ scale: 1.05 }}
