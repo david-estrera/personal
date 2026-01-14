@@ -48,7 +48,7 @@ export default function Projects() {
             >
               <div className="p-6 h-full flex flex-col">
                 <div className="flex-1">
-                  <h3 className="text-xl font-bold mb-2 text-white group-hover:text-primary-500 transition-colors duration-300"
+                  <h3 className="text-xl font-bold mb-2 text-white group-hover:text-primary-500 transition-colors duration-300">
                     {project.title}
                   </h3>
                   <p className="text-gray-400 mb-4 text-sm leading-relaxed">
