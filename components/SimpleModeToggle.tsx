@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useSimpleMode } from "@/lib/simple-mode";
 
 type Props = {
@@ -8,6 +9,33 @@ type Props = {
 
 export default function SimpleModeToggle({ variant = "chip" }: Props) {
   const { simple, setSimple } = useSimpleMode();
+  const [introActive, setIntroActive] = useState(true);
+
+  useEffect(() => {
+    if (variant !== "chip") return;
+
+    const update = () => {
+      const intro = document.getElementById("laptop-intro");
+      if (!intro) {
+        setIntroActive(false);
+        return;
+      }
+      // Match Navbar: hide chip once the header takes over
+      const threshold = Math.max(
+        0,
+        intro.offsetHeight - window.innerHeight * 0.2
+      );
+      setIntroActive(window.scrollY < threshold);
+    };
+
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, [variant]);
 
   const onToggle = () => {
     const next = !simple;
@@ -21,7 +49,8 @@ export default function SimpleModeToggle({ variant = "chip" }: Props) {
     }
   };
 
-  if (variant === "chip" && simple) return null;
+  // Floating chip: only during the 3D intro (nav is hidden then)
+  if (variant === "chip" && (simple || !introActive)) return null;
 
   const isNav = variant === "nav";
 
