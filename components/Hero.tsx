@@ -25,7 +25,7 @@ export default function Hero({ preview = false }: Props) {
   return (
     <section
       id={preview ? undefined : "home"}
-      className={`relative flex min-h-[100svh] items-center justify-center px-4 pt-24 pb-16 sm:px-6 lg:px-8 ${
+      className={`relative flex min-h-[100svh] items-center justify-center px-4 pt-[max(5.5rem,env(safe-area-inset-top)+4rem)] pb-[max(4rem,env(safe-area-inset-bottom)+2rem)] sm:px-6 lg:px-8 ${
         preview ? "bg-[#0c0c0e]" : ""
       }`}
     >
@@ -52,7 +52,7 @@ export default function Hero({ preview = false }: Props) {
         </motion.p>
         <motion.h1
           variants={fadeInUp}
-          className="font-heading text-5xl font-semibold leading-[1.05] tracking-tight text-white sm:text-6xl md:text-7xl"
+          className="font-heading text-4xl font-semibold leading-[1.05] tracking-tight text-white sm:text-6xl md:text-7xl"
         >
           {preview ? (
             "Hi, I'm David"
@@ -63,7 +63,7 @@ export default function Hero({ preview = false }: Props) {
 
         <motion.p
           variants={fadeInUp}
-          className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-zinc-400 sm:text-xl"
+          className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-zinc-400 sm:text-lg md:text-xl"
         >
           AI &amp; data engineer and full-stack developer building reliable
           systems from data pipelines to production delivery.
@@ -76,14 +76,14 @@ export default function Hero({ preview = false }: Props) {
           <button
             type="button"
             onClick={handleScrollDown}
-            className="w-full min-w-[10.5rem] cursor-pointer rounded-md bg-emerald-600 px-7 py-3.5 font-medium text-white transition-colors hover:bg-emerald-500 sm:w-auto"
+            className="w-full min-h-[48px] min-w-[10.5rem] cursor-pointer touch-manipulation rounded-md bg-emerald-600 px-7 py-3.5 font-medium text-white transition-colors hover:bg-emerald-500 sm:w-auto"
           >
             View my work
           </button>
           <button
             type="button"
             onClick={handleDownloadResume}
-            className="inline-flex w-full min-w-[10.5rem] cursor-pointer items-center justify-center gap-2 rounded-md border border-zinc-600 px-7 py-3.5 font-medium text-zinc-100 transition-colors hover:border-emerald-600/50 hover:text-emerald-400 sm:w-auto"
+            className="inline-flex w-full min-h-[48px] min-w-[10.5rem] cursor-pointer touch-manipulation items-center justify-center gap-2 rounded-md border border-zinc-600 px-7 py-3.5 font-medium text-zinc-100 transition-colors hover:border-emerald-600/50 hover:text-emerald-400 sm:w-auto"
           >
             <Download size={18} aria-hidden="true" />
             Resume

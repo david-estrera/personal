@@ -5,12 +5,21 @@ import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 const KEY = "portfolio-simple-mode";
 const EVENT = "portfolio-simple-mode-change";
 
+/** Narrow screens / touch devices default to Simple when no preference is saved. */
+export function prefersSimpleByDefault(): boolean {
+  if (typeof window === "undefined") return false;
+  return window.matchMedia("(max-width: 768px), (pointer: coarse)").matches;
+}
+
 function readSimple(): boolean {
   if (typeof window === "undefined") return false;
   try {
-    return window.localStorage.getItem(KEY) === "1";
+    const stored = window.localStorage.getItem(KEY);
+    if (stored === "1") return true;
+    if (stored === "0") return false;
+    return prefersSimpleByDefault();
   } catch {
-    return false;
+    return prefersSimpleByDefault();
   }
 }
 
@@ -32,7 +41,7 @@ function subscribe(onStoreChange: () => void) {
   };
 }
 
-/** SSR-safe simple-mode flag (persisted). Default: 3D on. */
+/** SSR-safe simple-mode flag (persisted). Mobile defaults to Simple. */
 export function useSimpleMode() {
   const simple = useSyncExternalStore(subscribe, readSimple, () => false);
 
@@ -47,9 +56,21 @@ export function useSimpleMode() {
   return { simple, setSimple, toggle };
 }
 
-/** True after first client paint — use to avoid flash-loading 3D when preference is simple. */
 export function useHasHydrated() {
   const [hydrated, setHydrated] = useState(false);
   useEffect(() => setHydrated(true), []);
   return hydrated;
+}
+
+/** True for phones / coarse pointers — used to lighten the 3D intro. */
+export function useIsMobileUi() {
+  const subscribeMq = (onChange: () => void) => {
+    const mq = window.matchMedia("(max-width: 768px), (pointer: coarse)");
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  };
+  const get = () =>
+    typeof window !== "undefined" &&
+    window.matchMedia("(max-width: 768px), (pointer: coarse)").matches;
+  return useSyncExternalStore(subscribeMq, get, () => false);
 }

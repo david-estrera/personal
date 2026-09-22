@@ -10,21 +10,28 @@ import OfficeEnvironment from "./laptop/OfficeEnvironment";
 import WalkingDog from "./laptop/WalkingDog";
 import WavingPerson from "./laptop/WavingPerson";
 import Hero from "./Hero";
+import { useIsMobileUi } from "@/lib/simple-mode";
 
 /**
  * 0–0.35 open · 0.32–0.48 zoom to black screen ·
- * 0.54–0.62 Hero fades in · held pinned until sticky ends (~0.72).
+ * 0.54–0.62 Hero fades in · held pinned until sticky ends.
  */
 function ScrollRig({
   openRef,
   progressRef,
+  mobile,
 }: {
   openRef: React.MutableRefObject<number>;
   progressRef: React.MutableRefObject<number>;
+  mobile: boolean;
 }) {
   const { camera } = useThree();
-  const pos = useRef(new THREE.Vector3(0, 2.55, 5.6));
-  const look = useRef(new THREE.Vector3(0, -0.05, 0.2));
+  const start = mobile
+    ? { pos: [0, 2.9, 7.2] as const, look: [0, 0.05, 0.15] as const, fov: 48 }
+    : { pos: [0, 2.55, 5.6] as const, look: [0, -0.05, 0.2] as const, fov: 42 };
+
+  const pos = useRef(new THREE.Vector3(...start.pos));
+  const look = useRef(new THREE.Vector3(...start.look));
   const posTarget = useRef(new THREE.Vector3());
   const lookTarget = useRef(new THREE.Vector3());
 
@@ -37,15 +44,39 @@ function ScrollRig({
     const openE = open * open * (3 - 2 * open);
     const zoomE = zoom * zoom * (3 - 2 * zoom);
 
+    // Mobile stays a bit further out so the framed laptop still reads in portrait
+    const midY = mobile ? 2.05 : 1.85;
+    const midZ = mobile ? 4.2 : 3.5;
+    const endY = mobile ? 1.35 : 1.22;
+    const endZ = mobile ? 1.75 : 1.35;
+    const endLookY = mobile ? 1.0 : 1.08;
+    const endFov = mobile ? 28 : 24;
+
     posTarget.current.set(
       0,
-      THREE.MathUtils.lerp(THREE.MathUtils.lerp(2.55, 1.85, openE), 1.22, zoomE),
-      THREE.MathUtils.lerp(THREE.MathUtils.lerp(5.6, 3.5, openE), 1.35, zoomE)
+      THREE.MathUtils.lerp(
+        THREE.MathUtils.lerp(start.pos[1], midY, openE),
+        endY,
+        zoomE
+      ),
+      THREE.MathUtils.lerp(
+        THREE.MathUtils.lerp(start.pos[2], midZ, openE),
+        endZ,
+        zoomE
+      )
     );
     lookTarget.current.set(
       0,
-      THREE.MathUtils.lerp(THREE.MathUtils.lerp(-0.05, 0.75, openE), 1.08, zoomE),
-      THREE.MathUtils.lerp(THREE.MathUtils.lerp(0.2, -0.2, openE), -0.58, zoomE)
+      THREE.MathUtils.lerp(
+        THREE.MathUtils.lerp(start.look[1], 0.7, openE),
+        endLookY,
+        zoomE
+      ),
+      THREE.MathUtils.lerp(
+        THREE.MathUtils.lerp(start.look[2], -0.2, openE),
+        -0.55,
+        zoomE
+      )
     );
 
     const k = Math.min(1, dt * 5.5);
@@ -57,8 +88,8 @@ function ScrollRig({
     if ("fov" in camera) {
       const cam = camera as THREE.PerspectiveCamera;
       cam.fov = THREE.MathUtils.lerp(
-        THREE.MathUtils.lerp(42, 34, openE),
-        24,
+        THREE.MathUtils.lerp(start.fov, mobile ? 40 : 34, openE),
+        endFov,
         zoomE
       );
       cam.updateProjectionMatrix();
@@ -71,9 +102,11 @@ function ScrollRig({
 function Scene({
   openRef,
   progressRef,
+  mobile,
 }: {
   openRef: React.MutableRefObject<number>;
   progressRef: React.MutableRefObject<number>;
+  mobile: boolean;
 }) {
   return (
     <>
@@ -85,8 +118,8 @@ function Scene({
         position={[-5, 6, 2]}
         intensity={1.5}
         color="#fff4e6"
-        castShadow
-        shadow-mapSize={[1024, 1024]}
+        castShadow={!mobile}
+        shadow-mapSize={mobile ? [512, 512] : [1024, 1024]}
       />
       <directionalLight position={[4, 5, 3]} intensity={0.4} color="#eef2f7" />
 
@@ -98,16 +131,18 @@ function Scene({
         <Laptop openRef={openRef} />
       </group>
 
-      <ContactShadows
-        position={[0, 0.042, 0.05]}
-        opacity={0.38}
-        scale={11}
-        blur={2.4}
-        far={4}
-        color="#3d3428"
-      />
+      {!mobile && (
+        <ContactShadows
+          position={[0, 0.042, 0.05]}
+          opacity={0.38}
+          scale={11}
+          blur={2.4}
+          far={4}
+          color="#3d3428"
+        />
+      )}
 
-      <ScrollRig openRef={openRef} progressRef={progressRef} />
+      <ScrollRig openRef={openRef} progressRef={progressRef} mobile={mobile} />
     </>
   );
 }
@@ -123,14 +158,13 @@ export default function LaptopIntro() {
   const progressMv = useMotionValue(0);
   const [keepCanvas, setKeepCanvas] = useState(true);
   const [heroLive, setHeroLive] = useState(false);
+  const mobile = useIsMobileUi();
 
-  // Manual progress: useScroll(target) was stuck near 0 in this layout
   useEffect(() => {
     const update = () => {
       const el = sectionRef.current;
       if (!el) return;
       const rect = el.getBoundingClientRect();
-      // 0 when section top hits viewport top; 1 when section bottom hits viewport top
       const p = clamp01(-rect.top / el.offsetHeight);
       progressRef.current = p;
       progressMv.set(p);
@@ -147,7 +181,6 @@ export default function LaptopIntro() {
     };
   }, [progressMv]);
 
-  // Black cover → Hero fully in while still sticky, then hold before release
   const canvasOpacity = useTransform(progressMv, [0.46, 0.54], [1, 0]);
   const heroOpacity = useTransform(progressMv, [0.54, 0.62], [0, 1]);
   const cueOpacity = useTransform(progressMv, [0, 0.06, 0.28], [1, 0.65, 0]);
@@ -156,7 +189,7 @@ export default function LaptopIntro() {
     <section
       ref={sectionRef}
       id="laptop-intro"
-      className="relative z-30 h-[360vh]"
+      className={`relative z-30 ${mobile ? "h-[260vh]" : "h-[360vh]"}`}
       aria-label="Laptop open animation"
     >
       <div className="sticky top-0 h-[100svh] w-full overflow-hidden bg-[#0c0c0e]">
@@ -166,13 +199,18 @@ export default function LaptopIntro() {
             style={{ opacity: canvasOpacity }}
           >
             <Canvas
-              dpr={[1, 1.6]}
-              shadows
-              camera={{ position: [0, 2.55, 5.6], fov: 42, near: 0.05, far: 50 }}
+              dpr={mobile ? [1, 1.25] : [1, 1.6]}
+              shadows={!mobile}
+              camera={{
+                position: mobile ? [0, 2.9, 7.2] : [0, 2.55, 5.6],
+                fov: mobile ? 48 : 42,
+                near: 0.05,
+                far: 50,
+              }}
               gl={{
-                antialias: true,
+                antialias: !mobile,
                 alpha: false,
-                powerPreference: "high-performance",
+                powerPreference: mobile ? "low-power" : "high-performance",
               }}
               style={{ width: "100%", height: "100%" }}
               onCreated={({ gl }) => {
@@ -181,7 +219,11 @@ export default function LaptopIntro() {
               }}
             >
               <Suspense fallback={null}>
-                <Scene openRef={openRef} progressRef={progressRef} />
+                <Scene
+                  openRef={openRef}
+                  progressRef={progressRef}
+                  mobile={mobile}
+                />
               </Suspense>
             </Canvas>
           </motion.div>
@@ -198,10 +240,10 @@ export default function LaptopIntro() {
         </motion.div>
 
         <motion.p
-          className="pointer-events-none absolute bottom-10 left-1/2 z-30 -translate-x-1/2 font-heading text-[11px] uppercase tracking-[0.22em] text-emerald-800/90"
+          className="pointer-events-none absolute bottom-[max(2.5rem,calc(env(safe-area-inset-bottom)+1.5rem))] left-1/2 z-30 -translate-x-1/2 px-4 text-center font-heading text-[11px] uppercase tracking-[0.22em] text-emerald-800/90"
           style={{ opacity: cueOpacity }}
         >
-          Scroll to open
+          {mobile ? "Swipe up to open" : "Scroll to open"}
         </motion.p>
       </div>
     </section>

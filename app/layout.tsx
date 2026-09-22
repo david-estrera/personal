@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Outfit, Work_Sans } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/Providers";
@@ -19,6 +19,13 @@ export const metadata: Metadata = {
   title: "David Estrera — Portfolio",
   description:
     "AI & data engineer, full-stack developer, and DevOps intern — projects, skills, and experience.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#0c0c0e",
 };
 
 export default function RootLayout({

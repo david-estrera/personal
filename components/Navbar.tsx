@@ -119,7 +119,7 @@ export default function Navbar({ forceVisible = false }: Props) {
 
           <button
             type="button"
-            className="md:hidden p-2 text-ink-muted hover:text-ink transition-colors cursor-pointer"
+            className="md:hidden flex min-h-[44px] min-w-[44px] items-center justify-center p-2 text-ink-muted hover:text-ink transition-colors cursor-pointer touch-manipulation"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMobileMenuOpen}
