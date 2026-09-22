@@ -117,15 +117,18 @@ export default function Navbar({ forceVisible = false }: Props) {
             <SimpleModeToggle variant="nav" />
           </div>
 
-          <button
-            type="button"
-            className="md:hidden flex min-h-[44px] min-w-[44px] items-center justify-center p-2 text-ink-muted hover:text-ink transition-colors cursor-pointer touch-manipulation"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
-            aria-expanded={isMobileMenuOpen}
-          >
-            {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
+          <div className="flex md:hidden items-center gap-2">
+            <SimpleModeToggle variant="nav" />
+            <button
+              type="button"
+              className="flex min-h-[44px] min-w-[44px] items-center justify-center p-2 text-ink-muted hover:text-ink transition-colors cursor-pointer touch-manipulation"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isMobileMenuOpen}
+            >
+              {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -156,9 +159,6 @@ export default function Navbar({ forceVisible = false }: Props) {
                   {item.name}
                 </a>
               ))}
-              <div className="pt-3 pb-1">
-                <SimpleModeToggle variant="nav" />
-              </div>
             </div>
           </motion.div>
         )}

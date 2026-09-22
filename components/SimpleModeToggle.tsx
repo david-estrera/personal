@@ -53,7 +53,7 @@ export default function SimpleModeToggle({ variant = "chip" }: Props) {
         onClick={onToggle}
         className={`relative inline-grid min-h-[44px] cursor-pointer touch-manipulation grid-cols-2 items-center rounded-full border p-1 transition-colors active:scale-[0.98] ${
           isNav
-            ? "w-[8rem] border-line bg-zinc-900/40"
+            ? "w-[7.25rem] sm:w-[8rem] border-line bg-zinc-900/40"
             : "w-[8.25rem] border-zinc-700/80 bg-[#0c0c0e]/95 shadow-lg backdrop-blur-md"
         }`}
       >
