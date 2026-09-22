@@ -112,7 +112,7 @@ export default function WalkingDog() {
     legRef,
     position,
   }: {
-    legRef: React.RefObject<THREE.Group | null>;
+    legRef: React.Ref<THREE.Group>;
     position: [number, number, number];
   }) => (
     <group ref={legRef} position={position}>
