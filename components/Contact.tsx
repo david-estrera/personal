@@ -1,14 +1,11 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { motion } from "motion/react";
+import { useState } from "react";
 import { Mail, Github, Linkedin, Download } from "lucide-react";
-import { fadeInUp, staggerContainer } from "@/lib/animations";
+import { fadeInUp, staggerContainer, viewportOnce } from "@/lib/animations";
 
 export default function Contact() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: false, margin: "-100px" });
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -25,44 +22,23 @@ export default function Contact() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
-    // Create mailto link with form data
+
     const subject = encodeURIComponent(`Contact from ${formData.name}`);
     const body = encodeURIComponent(
       `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
     );
-    const mailtoLink = `mailto:davidestrera.work@gmail.com?subject=${subject}&body=${body}`;
-    
-    // Open email client
-    window.location.href = mailtoLink;
-    
-    // Reset form
+    window.location.href = `mailto:davidestrera.work@gmail.com?subject=${subject}&body=${body}`;
+
     setFormData({ name: "", email: "", message: "" });
     setSubmitStatus("success");
-    
-    // Reset status after 3 seconds
-    setTimeout(() => {
-      setSubmitStatus("idle");
-    }, 3000);
+    setTimeout(() => setSubmitStatus("idle"), 3000);
   };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
-  const contactInfo = [
-    {
-      icon: Mail,
-      label: "Email",
-      value: "davidestrera.work@gmail.com",
-      href: "mailto:davidestrera.work@gmail.com",
-    },
-  ];
 
   const socialLinks = [
     {
@@ -80,163 +56,139 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      ref={ref}
-      className="min-h-screen py-20 md:py-32 px-4 sm:px-6 lg:px-8 bg-black"
+      className="py-24 md:py-32 px-4 sm:px-6 lg:px-8 border-t border-line"
     >
-      <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          variants={fadeInUp}
-          className="text-center mb-12 md:mb-16"
-        >
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4">
-            Get In <span className="text-primary-500">Touch</span>
+      <motion.div
+        className="max-w-content mx-auto"
+        initial="hidden"
+        whileInView="visible"
+        viewport={viewportOnce}
+        variants={staggerContainer}
+      >
+        <motion.div variants={fadeInUp} className="mb-14 md:mb-16 max-w-2xl">
+          <p className="font-heading text-sm uppercase tracking-[0.18em] text-primary-500 mb-3">
+            Contact
+          </p>
+          <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-ink mb-4">
+            Let&apos;s work together
           </h2>
-          <div className="w-24 h-1 bg-primary-600 mx-auto"></div>
-          <p className="text-gray-400 mt-6 text-lg max-w-2xl mx-auto">
-            Let's connect and discuss how we can work together
+          <p className="text-ink-muted text-lg">
+            Open to roles, collaborations, and interesting problems.
           </p>
         </motion.div>
 
-        <motion.div
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          variants={staggerContainer}
-          className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12"
-        >
-          {/* Contact Information */}
-          <motion.div variants={fadeInUp} className="space-y-6">
-            <h3 className="text-2xl font-bold text-white mb-6">Contact Information</h3>
-            {contactInfo.map((info) => {
-              const Icon = info.icon;
-              return (
-                <motion.div
-                  key={info.label}
-                  whileHover={{ x: 5 }}
-                  className="flex items-start gap-4 p-4 bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg hover:border-primary-600/50 transition-all duration-300"
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
+          <motion.div variants={fadeInUp} className="space-y-8">
+            <div className="flex items-start gap-4">
+              <div className="p-2.5 border border-line rounded-md text-primary-500">
+                <Mail size={20} aria-hidden="true" />
+              </div>
+              <div>
+                <p className="text-sm text-ink-faint mb-1">Email</p>
+                <a
+                  href="mailto:davidestrera.work@gmail.com"
+                  className="text-ink hover:text-primary-500 transition-colors cursor-pointer"
                 >
-                  <div className="p-3 bg-primary-600/20 rounded-lg text-primary-600">
-                    <Icon size={24} />
-                  </div>
-                  <div>
-                    <p className="text-gray-400 text-sm mb-1">{info.label}</p>
-                    {info.href ? (
-                      <a
-                        href={info.href}
-                        className="text-white hover:text-primary-500 transition-colors duration-300"
-                      >
-                        {info.value}
-                      </a>
-                    ) : (
-                      <p className="text-white">{info.value}</p>
-                    )}
-                  </div>
-                </motion.div>
-              );
-            })}
+                  davidestrera.work@gmail.com
+                </a>
+              </div>
+            </div>
 
-            {/* Social Links */}
-            <div className="pt-4">
-              <h4 className="text-xl font-bold text-white mb-4">Social Links</h4>
-              <div className="flex gap-4">
+            <div>
+              <p className="text-sm text-ink-faint mb-3">Social</p>
+              <div className="flex gap-3">
                 {socialLinks.map((social) => {
                   const Icon = social.icon;
                   return (
-                    <motion.a
+                    <a
                       key={social.label}
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      whileHover={{ scale: 1.1, y: -5 }}
-                      whileTap={{ scale: 0.9 }}
-                      className="p-4 bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg hover:border-primary-600/50 text-gray-400 hover:text-primary-600 transition-all duration-300"
+                      aria-label={social.label}
+                      className="p-3 border border-line rounded-md text-ink-muted hover:text-primary-500 hover:border-primary-600/40 transition-colors cursor-pointer"
                     >
-                      <Icon size={24} />
-                    </motion.a>
+                      <Icon size={20} aria-hidden="true" />
+                    </a>
                   );
                 })}
               </div>
             </div>
 
-            {/* Download Resume Button */}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <button
+              type="button"
               onClick={handleDownloadResume}
-              className="w-full md:w-auto px-8 py-4 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-primary-600/50"
+              className="inline-flex items-center gap-2 px-6 py-3.5 bg-primary-600 text-white font-medium rounded-md hover:bg-primary-700 transition-colors cursor-pointer"
             >
-              <Download size={20} />
-              Download Resume
-            </motion.button>
+              <Download size={18} aria-hidden="true" />
+              Download resume
+            </button>
           </motion.div>
 
-          {/* Contact Form */}
-          <motion.div variants={fadeInUp} className="space-y-6">
-            <h3 className="text-2xl font-bold text-white mb-6">Send a Message</h3>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label htmlFor="name" className="block text-gray-400 text-sm mb-2">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 bg-gray-900/50 border border-gray-800 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-primary-600 transition-colors duration-300"
-                  placeholder="Your name"
-                />
-              </div>
-              <div>
-                <label htmlFor="email" className="block text-gray-400 text-sm mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 bg-gray-900/50 border border-gray-800 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-primary-600 transition-colors duration-300"
-                  placeholder="your.email@example.com"
-                />
-              </div>
-              <div>
-                <label htmlFor="message" className="block text-gray-400 text-sm mb-2">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  rows={6}
-                  className="w-full px-4 py-3 bg-gray-900/50 border border-gray-800 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-primary-500 transition-colors resize-none"
-                  placeholder="Your message..."
-                ></textarea>
-              </div>
-              {submitStatus === "success" && (
-                <div className="p-3 bg-primary-600/20 border border-primary-600/50 rounded-lg text-primary-400 text-sm">
-                  Your email client should open shortly!
-                </div>
-              )}
-              <motion.button
-                type="submit"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="w-full px-8 py-4 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-all duration-300 shadow-lg shadow-primary-600/50"
-              >
-                Send Message
-              </motion.button>
-            </form>
-          </motion.div>
-        </motion.div>
-      </div>
+          <motion.form
+            variants={fadeInUp}
+            onSubmit={handleSubmit}
+            className="space-y-4"
+          >
+            <div>
+              <label htmlFor="name" className="block text-sm text-ink-faint mb-2">
+                Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-3 bg-surface-muted border border-line rounded-md text-ink placeholder:text-ink-faint focus:outline-none focus:border-primary-600 focus:ring-1 focus:ring-primary-600/40 transition-[border-color,box-shadow] duration-200"
+                placeholder="Your name"
+              />
+            </div>
+            <div>
+              <label htmlFor="email" className="block text-sm text-ink-faint mb-2">
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-3 bg-surface-muted border border-line rounded-md text-ink placeholder:text-ink-faint focus:outline-none focus:border-primary-600 focus:ring-1 focus:ring-primary-600/40 transition-[border-color,box-shadow] duration-200"
+                placeholder="you@example.com"
+              />
+            </div>
+            <div>
+              <label htmlFor="message" className="block text-sm text-ink-faint mb-2">
+                Message
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                required
+                rows={5}
+                className="w-full px-4 py-3 bg-surface-muted border border-line rounded-md text-ink placeholder:text-ink-faint focus:outline-none focus:border-primary-600 focus:ring-1 focus:ring-primary-600/40 transition-[border-color,box-shadow] duration-200 resize-none"
+                placeholder="Your message..."
+              />
+            </div>
+            {submitStatus === "success" && (
+              <p className="text-sm text-primary-500" role="status">
+                Your email client should open shortly.
+              </p>
+            )}
+            <button
+              type="submit"
+              className="w-full px-6 py-3.5 bg-primary-600 text-white font-medium rounded-md hover:bg-primary-700 transition-colors cursor-pointer"
+            >
+              Send message
+            </button>
+          </motion.form>
+        </div>
+      </motion.div>
     </section>
   );
 }

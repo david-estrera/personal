@@ -9,41 +9,40 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        surface: {
+          DEFAULT: "#0c0c0e",
+          raised: "#141416",
+          muted: "#18181b",
+        },
+        ink: {
+          DEFAULT: "#f4f4f5",
+          muted: "#a1a1aa",
+          faint: "#71717a",
+        },
+        line: "#27272a",
         primary: {
-          DEFAULT: "#15803d",
+          DEFAULT: "#16a34a",
           50: "#f0fdf4",
           100: "#dcfce7",
           200: "#bbf7d0",
           300: "#86efac",
           400: "#4ade80",
-          500: "#15803d",
-          600: "#14532d",
-          700: "#166534",
-          800: "#1a5f3f",
-          900: "#0f3d26",
+          500: "#22c55e",
+          600: "#16a34a",
+          700: "#15803d",
+          800: "#166534",
+          900: "#14532d",
         },
       },
       fontFamily: {
-        display: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        heading: ["var(--font-outfit)", "system-ui", "sans-serif"],
+        body: ["var(--font-work-sans)", "system-ui", "sans-serif"],
       },
-      animation: {
-        "fade-in": "fadeIn 0.5s ease-in-out",
-        "slide-up": "slideUp 0.5s ease-out",
-        "slide-down": "slideDown 0.5s ease-out",
+      maxWidth: {
+        content: "72rem",
       },
-      keyframes: {
-        fadeIn: {
-          "0%": { opacity: "0" },
-          "100%": { opacity: "1" },
-        },
-        slideUp: {
-          "0%": { transform: "translateY(20px)", opacity: "0" },
-          "100%": { transform: "translateY(0)", opacity: "1" },
-        },
-        slideDown: {
-          "0%": { transform: "translateY(-20px)", opacity: "0" },
-          "100%": { transform: "translateY(0)", opacity: "1" },
-        },
+      transitionDuration: {
+        DEFAULT: "200ms",
       },
     },
   },

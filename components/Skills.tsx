@@ -1,8 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "motion/react";
 import {
   Brain,
   Database,
@@ -11,7 +9,7 @@ import {
   BarChart3,
   Cpu,
 } from "lucide-react";
-import { fadeInUp, staggerContainer } from "@/lib/animations";
+import { fadeInUp, staggerContainer, viewportOnce } from "@/lib/animations";
 
 const skillCategories = [
   {
@@ -26,7 +24,6 @@ const skillCategories = [
       "AI Model Integration",
       "Predictive Analytics",
     ],
-    color: "text-purple-400",
   },
   {
     title: "Data Analysis & Visualization",
@@ -39,31 +36,16 @@ const skillCategories = [
       "Data Modeling",
       "Microsoft Excel",
     ],
-    color: "text-blue-400",
   },
   {
     title: "Programming Languages",
     icon: Code,
-    skills: [
-      "Python",
-      "Java",
-      "JavaScript",
-      "C",
-      "C#",
-      "x86-64 Assembly",
-    ],
-    color: "text-green-400",
+    skills: ["Python", "Java", "JavaScript", "C", "C#", "x86-64 Assembly"],
   },
   {
     title: "Data Technologies",
     icon: Database,
-    skills: [
-      "Databricks",
-      "Supabase",
-      "Firebase",
-      "MongoDB",
-    ],
-    color: "text-yellow-400",
+    skills: ["Databricks", "Supabase", "Firebase", "MongoDB"],
   },
   {
     title: "Frameworks & Tools",
@@ -73,79 +55,72 @@ const skillCategories = [
       "Node.js",
       "Express",
       "Git",
+      "GitHub",
       "RESTful APIs",
       "Figma",
       "Linux",
-      "VS Code",
     ],
-    color: "text-primary-400",
   },
   {
-    title: "Cloud & Infrastructure",
+    title: "Cloud & DevOps",
     icon: Cloud,
     skills: [
+      "GitHub Provisioning",
+      "Azure DevOps",
+      "CI/CD Migrations",
       "Cloud Computing",
-      "Big Data Processing",
       "Data Pipelines",
     ],
-    color: "text-cyan-400",
   },
 ];
 
 export default function Skills() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: false, margin: "-100px" });
-
   return (
     <section
       id="skills"
-      ref={ref}
-      className="min-h-screen py-20 md:py-32 px-4 sm:px-6 lg:px-8 bg-black"
+      className="py-24 md:py-32 px-4 sm:px-6 lg:px-8 border-t border-line"
     >
-      <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          variants={fadeInUp}
-          className="text-center mb-12 md:mb-16"
-        >
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4">
-            Technical <span className="text-primary-500">Skills</span>
+      <motion.div
+        className="max-w-content mx-auto"
+        initial="hidden"
+        whileInView="visible"
+        viewport={viewportOnce}
+        variants={staggerContainer}
+      >
+        <motion.div variants={fadeInUp} className="mb-14 md:mb-16 max-w-2xl">
+          <p className="font-heading text-sm uppercase tracking-[0.18em] text-primary-500 mb-3">
+            Skills
+          </p>
+          <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-ink mb-4">
+            Technical toolkit
           </h2>
-          <div className="w-24 h-1 bg-primary-500 mx-auto"></div>
-          <p className="text-gray-400 mt-6 text-lg max-w-2xl mx-auto">
-            A comprehensive toolkit for building modern, intelligent solutions
+          <p className="text-ink-muted text-lg">
+            From models and pipelines to platforms and delivery.
           </p>
         </motion.div>
 
-        <motion.div
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          variants={staggerContainer}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
-        >
-          {skillCategories.map((category, index) => {
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          {skillCategories.map((category) => {
             const Icon = category.icon;
             return (
               <motion.div
                 key={category.title}
                 variants={fadeInUp}
-                whileHover={{ y: -5, scale: 1.02 }}
-                className="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg p-6 hover:border-primary-600/50 transition-all duration-300"
+                className="border-t border-line pt-5"
               >
-                <div className="flex items-center gap-4 mb-4">
-                  <div className={`p-3 bg-gray-800 rounded-lg ${category.color}`}>
-                    <Icon size={24} />
-                  </div>
-                  <h3 className="text-xl font-bold text-white">{category.title}</h3>
+                <div className="flex items-center gap-3 mb-4">
+                  <Icon
+                    size={20}
+                    className="text-primary-500 shrink-0"
+                    aria-hidden="true"
+                  />
+                  <h3 className="font-heading text-lg font-semibold text-ink">
+                    {category.title}
+                  </h3>
                 </div>
                 <ul className="space-y-2">
                   {category.skills.map((skill) => (
-                    <li
-                      key={skill}
-                      className="text-gray-400 text-sm flex items-center gap-2"
-                    >
-                      <span className="text-primary-600">▹</span>
+                    <li key={skill} className="text-ink-muted text-sm">
                       {skill}
                     </li>
                   ))}
@@ -153,8 +128,8 @@ export default function Skills() {
               </motion.div>
             );
           })}
-        </motion.div>
-      </div>
+        </div>
+      </motion.div>
     </section>
   );
 }

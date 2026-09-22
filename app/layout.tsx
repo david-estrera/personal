@@ -1,16 +1,24 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Outfit, Work_Sans } from "next/font/google";
 import "./globals.css";
+import Providers from "@/components/Providers";
 
-const inter = Inter({
+const outfit = Outfit({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-outfit",
+  display: "swap",
+});
+
+const workSans = Work_Sans({
+  subsets: ["latin"],
+  variable: "--font-work-sans",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "David - Portfolio",
-  description: "Portfolio website showcasing projects, skills, and experience",
+  title: "David Estrera — Portfolio",
+  description:
+    "AI & data engineer, full-stack developer, and DevOps intern — projects, skills, and experience.",
 };
 
 export default function RootLayout({
@@ -20,8 +28,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className={`${inter.variable} min-h-screen bg-black text-white antialiased font-display`}>
-        {children}
+      <body
+        className={`${outfit.variable} ${workSans.variable} min-h-screen bg-surface text-ink antialiased font-body`}
+      >
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

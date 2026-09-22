@@ -19,6 +19,9 @@
 .DS_Store
 *.pem
 
+# local clone of reference skills repo (skills live in .cursor/skills)
+/blender-skills
+
 # debug
 npm-debug.log*
 yarn-debug.log*

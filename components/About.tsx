@@ -1,43 +1,34 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "motion/react";
 import Image from "next/image";
-import { fadeInUp, slideInLeft, slideInRight } from "@/lib/animations";
+import { fadeInUp, staggerContainer, viewportOnce } from "@/lib/animations";
 
 export default function About() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: false, margin: "-100px" });
-
   return (
     <section
       id="about"
-      ref={ref}
-      className="min-h-screen py-20 md:py-32 px-4 sm:px-6 lg:px-8 bg-black"
+      className="py-24 md:py-32 px-4 sm:px-6 lg:px-8 border-t border-line"
     >
-      <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          variants={fadeInUp}
-          className="text-center mb-12 md:mb-16"
-        >
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4">
-            About <span className="text-primary-500">Me</span>
+      <motion.div
+        className="max-w-content mx-auto"
+        initial="hidden"
+        whileInView="visible"
+        viewport={viewportOnce}
+        variants={staggerContainer}
+      >
+        <motion.div variants={fadeInUp} className="mb-14 md:mb-16 max-w-2xl">
+          <p className="font-heading text-sm uppercase tracking-[0.18em] text-primary-500 mb-3">
+            About
+          </p>
+          <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-ink">
+            Building at the intersection of AI, data, and delivery
           </h2>
-          <div className="w-24 h-1 bg-primary-500 mx-auto"></div>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-          {/* Image */}
-          <motion.div
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            variants={slideInLeft}
-            className="relative w-full max-w-md mx-auto"
-          >
-            <div className="relative aspect-square rounded-lg overflow-hidden border-2 border-primary-600/50 shadow-lg shadow-primary-600/20">
+        <div className="grid md:grid-cols-[minmax(0,20rem)_1fr] gap-10 md:gap-16 items-start">
+          <motion.div variants={fadeInUp} className="relative w-full max-w-sm mx-auto md:mx-0">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-md border border-line bg-surface-muted">
               <Image
                 src="/personal pic.png"
                 alt="David Joshua Estrera"
@@ -47,54 +38,36 @@ export default function About() {
                 unoptimized
               />
             </div>
-            <motion.div
-              className="absolute -bottom-4 -right-4 w-full h-full border-2 border-primary-600/30 rounded-lg -z-10"
-              animate={{
-                x: [0, 8, 0],
-                y: [0, 8, 0],
-              }}
-              transition={{
-                duration: 6,
-                repeat: Infinity,
-                ease: [0.4, 0, 0.6, 1],
-              }}
-            />
           </motion.div>
 
-          {/* Content */}
-          <motion.div
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            variants={slideInRight}
-            className="space-y-6 text-gray-300"
-          >
-            <p className="text-lg sm:text-xl leading-relaxed">
-              I'm a Computer Science student at De La Salle University, pursuing a Bachelor of Science (Honors) 
-              with a Minor in Data Science and a Master of Science in Computer Science.
+          <motion.div variants={fadeInUp} className="space-y-5 text-ink-muted text-base sm:text-lg leading-relaxed">
+            <p>
+              I&apos;m a Computer Science student at De La Salle University,
+              pursuing a Bachelor of Science (Honors) with a Minor in Data
+              Science and a Master of Science in Computer Science.
             </p>
-            <p className="text-lg sm:text-xl leading-relaxed">
-              My passion lies at the intersection of AI, data engineering, and full-stack development. 
-              I specialize in building intelligent systems that transform complex data into actionable insights, 
-              creating solutions that make a real impact.
+            <p>
+              My work spans AI systems, data engineering, full-stack products,
+              and DevOps — most recently as a Shared Tech DevOps Engineer Intern
+              at ING, enabling GitHub provisioning and supporting Azure DevOps
+              to GitHub migrations.
             </p>
-            <p className="text-lg sm:text-xl leading-relaxed">
-              Currently working as a Research Associate at DLSU's Center for Human-Computer Innovations 
-              and TE3D House, I've contributed to projects involving computer vision, machine learning, 
-              and data pipeline development.
+            <p>
+              I&apos;ve also contributed as a Research Associate at DLSU&apos;s
+              TE3D House and Center for Human-Computer Innovations, and shipped
+              data and AI work at P&amp;G and WTW.
             </p>
-            <div className="pt-4">
-              <motion.a
+            <div className="pt-2">
+              <a
                 href="#contact"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-block px-6 py-3 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-all duration-300 shadow-lg shadow-primary-600/50"
+                className="inline-flex px-6 py-3 bg-primary-600 text-white font-medium rounded-md hover:bg-primary-700 transition-colors cursor-pointer"
               >
-                Get In Touch
-              </motion.a>
+                Get in touch
+              </a>
             </div>
           </motion.div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }
